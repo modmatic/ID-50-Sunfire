@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "globals.h"
 #include "elements.h"
+#include "sound_data.h"
 
 char hand_state = 1;
 
@@ -131,6 +132,8 @@ void stateGamePlaying() {
 
 void stateMenuPlay()
 {
+  ATM.stop();
+  danger = false;
   //bullets
   level_element_add(TYPE_BULLET,0,0,STATE_HIDDEN, 2,0);
   level_element_add(TYPE_BULLET,0,0,STATE_HIDDEN, 2,0);
@@ -144,13 +147,33 @@ void stateMenuPlay()
   level_element_add(TYPE_ENEMY_REAR, 0, 0, STATE_ENEMY_REAR_IN_TL, 1, 1);
   level_element_add(TYPE_ENEMY_FRONT, 32, 18, STATE_ENEMY_FRONT_IN_LF, 1, 1);
 
-  level_element_add(TYPE_ENEMY_CARRIER, 32, 32, STATE_ENEMY_CARRIER_SM, 1, 30);
+  level_element_add(TYPE_ENEMY_CARRIER, 32, 32, STATE_ENEMY_CARRIER_SM, 1, 100);
   //background
   for (char i=0; i< 16; i++) backSectionY[i] = 8;
 
   stateGamePlaying();
  
 };
+
+void waveComplete() {
+  ATM.play(playing);
+  gameState = STATE_WAVE_COMPLETE;
+}
+
+void stateWaveComplete() {
+    sprites.drawSelfMasked(20, 8, IMG_WAVE_COMPLETE, 0);
+    if (arduboy.justPressed(A_BUTTON | B_BUTTON)) stateMenuPlay();   
+}
+
+
+void stateGameOver() {
+  sprites.drawSelfMasked(20, 8, IMG_DEATH, 0);
+  if (arduboy.justPressed(A_BUTTON | B_BUTTON)) {
+    memset(levelElements, 0, sizeof(levelElements));
+    element_count = 0;
+    gameState = STATE_MENU_MAIN;
+  }
+}
 
 
 

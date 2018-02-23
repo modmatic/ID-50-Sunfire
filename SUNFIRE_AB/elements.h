@@ -285,9 +285,9 @@ LevelElement missile_handle(LevelElement element)
           break;
 
           case STATE_MISSILE_CLOSE:
-          //to do: show death graphic
           element.state = STATE_HIDDEN;
           danger = false;
+          gameState = STATE_GAME_OVER;
           break;
         }
       }
@@ -630,12 +630,17 @@ LevelElement enemy_carrier_handle(LevelElement element)
           if (element.step > 1) {
             element.step = 0;
             element.state = STATE_ENEMY_CARRIER_LG;
+            danger = true;
           }
           break;
 
           case STATE_ENEMY_CARRIER_LG:
           element.step++;
-          if (element.step > 1) element.state = STATE_HIDDEN;
+          if (element.step > 1) {
+            element.state = STATE_HIDDEN;
+            danger = true;
+            gameState = STATE_GAME_OVER;
+          }
           break;
         }
       }

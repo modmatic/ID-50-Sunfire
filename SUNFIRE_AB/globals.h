@@ -19,12 +19,15 @@
 //define game states (on main menu)
 #define STATE_GAME_PLAYING           6
 
+#define STATE_WAVE_COMPLETE          7
+#define STATE_GAME_OVER              8
+
 
 Arduboy2Base arduboy;
 Sprites sprites;
 
 unsigned long score = 0;
-//ATMsynth ATM;
+ATMsynth ATM;
 
 
 byte gameState = STATE_MENU_INTRO;   // start the game with the TEAM a.r.g. logo

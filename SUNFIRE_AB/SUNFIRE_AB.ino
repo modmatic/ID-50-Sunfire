@@ -1,7 +1,7 @@
 /*
 Sunfire - Space Flight Simulator/Shooter
 
-2017 - Trodoss
+2017/2018 - Trodoss
 */
 
 //determine the game
@@ -10,6 +10,7 @@ Sunfire - Space Flight Simulator/Shooter
 #include "globals.h"
 #include "menu.h"
 #include "game.h"
+#include "sound_data.h"
 
 typedef void (*FunctionPointer) ();
 
@@ -21,6 +22,8 @@ const FunctionPointer PROGMEM mainGameLoop[] = {
   stateMenuInfo,
   stateMenuSoundfx,
   stateGamePlaying,
+  stateWaveComplete,
+  stateGameOver
 };
 
 
@@ -28,7 +31,7 @@ void setup() {
   arduboy.begin();
   arduboy.setFrameRate(30);                                 // set the frame rate of the game at 30 fps
   arduboy.initRandomSeed();                                 // This sets the random to more random, remove this if no random is needed !
-  //ATM.play(themeSong);
+  ATM.play(themeSong);
 }
 
 
