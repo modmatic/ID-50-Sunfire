@@ -172,6 +172,7 @@ void stateGameOver() {
     memset(levelElements, 0, sizeof(levelElements));
     element_count = 0;
     gameState = STATE_MENU_MAIN;
+    ATM.play(titleSong);
   }
 }
 
