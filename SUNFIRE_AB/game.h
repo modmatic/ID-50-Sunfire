@@ -15,6 +15,7 @@ char backSectionY[16];
 char pitch = 0;
 char roll = 0;
 char x_change = 0;
+char x_drift = 0;
 
 void set_background_pitch() {
   char offset = pitch;
@@ -35,7 +36,7 @@ void draw_background_section (unsigned char strip, char y) {
   unsigned char start = (strip * 4);
 
   for (char i=0; i< 4; i++) {
-    sprites.drawOverwrite((strip * 8), y + (i*8), IMG_BACKDROP, start+i);
+    sprites.drawOverwrite((strip * 8)+x_drift, y + (i*8), IMG_BACKDROP, start+i);
   }
 }
 
@@ -44,15 +45,25 @@ void stateGamePlaying() {
 
 // arduboy.drawPixel(H_CENTER,V_CENTER,WHITE);
  x_change = 0;
+ 
  hand_state = 1;
  if (arduboy.pressed(RIGHT_BUTTON)) {
   hand_state = 2;
-  if (pitch < 6) pitch++;
+  if (pitch < 6) {
+    pitch++;
+  } else {
+    if (x_drift > -16) x_drift--;
+  }
  }
  
  if (arduboy.pressed(LEFT_BUTTON)) {
   hand_state = 0;
-  if (pitch > -6)  pitch--;
+  if (pitch > -6) 
+  {
+    pitch--;
+  } else {
+    if (x_drift < 16) x_drift++;
+  }
  }
  
  if (arduboy.pressed(DOWN_BUTTON)) {
