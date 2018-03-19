@@ -4,10 +4,16 @@
 #include "globals.h"
 #include "font.h"
 
+byte x_ship;
+byte y_ship;
+
 
 void drawTitleScreen()
 {
-  sprites.drawSelfMasked(20, 8, IMG_TITLE, 0);
+  sprites.drawSelfMasked(18, 40, titleSolar, 0);
+  sprites.drawSelfMasked(0, 11, titleSun, 0);
+  sprites.drawSelfMasked(58, 11, titleFire, 0);
+  sprites.drawPlusMask(42 + x_ship, 33 + y_ship, titleShip_plus_mask, 0);
 }
 
 void stateMenuIntro()
@@ -22,9 +28,13 @@ void stateMenuIntro()
 
 void stateMenuMain()
 {
+
+  x_ship = random(0, 2);
+  y_ship = random(0, 2);
+
   drawTitleScreen();
   print_progmem(16, 52, text_menu);
-  print_progmem(((menuSelection-2)*25)+12, 52, text_pointer);
+  print_progmem(((menuSelection - 2) * 25) + 12, 52, text_pointer);
   if (arduboy.justPressed(RIGHT_BUTTON) && (menuSelection < 5)) menuSelection++;
   if (arduboy.justPressed(LEFT_BUTTON) && (menuSelection > 2)) menuSelection--;
   if (arduboy.justPressed(B_BUTTON)) gameState = menuSelection;
