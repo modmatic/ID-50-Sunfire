@@ -137,7 +137,7 @@ void stateGamePlaying() {
    level_element_draw_display();   
  }
 
- print_number(92, 54, score);
+ //print_number(92, 54, score);
  
 };
 
