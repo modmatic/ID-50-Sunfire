@@ -5,16 +5,23 @@
 
 byte x_ship;
 byte y_ship;
+byte flareFrame;
 
 
 void drawTitleScreen()
 {
   x_ship = random(0, 2);
   y_ship = random(0, 2);
+  if (arduboy.everyXFrames(6)) flareFrame++;
   for (byte i = 0; i < 16; i++) sprites.drawSelfMasked(i * 8, 0, titleWhite, 0);
   sprites.drawSelfMasked(0, 11, titleSun, 0);
   sprites.drawSelfMasked(58, 11, titleFire, 0);
   sprites.drawSelfMasked(18, 40, titleSolar, 0);
+  //sprites.drawSelfMasked(16, 40, FlareOne, flareFrame % 4);
+  sprites.drawSelfMasked(15, 40, FlareTwo, flareFrame % 8);
+  sprites.drawSelfMasked(40, 48, FlareTwo, (flareFrame + 4) % 8);
+  sprites.drawSelfMasked(83, 47, FlareTwo, (flareFrame + 2) % 8);
+  sprites.drawSelfMasked(25, 43, FlareThree, (flareFrame + 4) % 8);
   sprites.drawPlusMask(42 + x_ship, 33 + y_ship, titleShip_plus_mask, 0);
 }
 

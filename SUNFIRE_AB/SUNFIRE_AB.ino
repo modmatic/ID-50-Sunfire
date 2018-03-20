@@ -1,7 +1,13 @@
 /*
-  Sunfire - Space Flight Simulator/Shooter
+  Sunfire  - Space Flight Simulator/Shooter: http://www.team-arg.org/sufi-manual.html
+
+  Arduboy version 0.1:  http://www.team-arg.org/sufi-downloads.html
+
+  MADE by TEAM a.r.g. : http://www.team-arg.org/more-about.html
 
   2017/2018 - Trodoss
+
+  License: MIT : https://opensource.org/licenses/MIT
 */
 
 //determine the game
@@ -41,6 +47,5 @@ void loop() {
   arduboy.clear();
   ((FunctionPointer) pgm_read_word (&mainGameLoop[gameState]))();
   arduboy.display();
-  if (arduboy.everyXFrames(3)) blinking = !blinking;
 }
 

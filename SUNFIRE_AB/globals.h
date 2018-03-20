@@ -26,16 +26,18 @@
 Arduboy2Base arduboy;
 Sprites sprites;
 
-unsigned long score = 0;
 ATMsynth ATM;
 
+boolean danger = false;
+boolean blinking = true;
+boolean songPlayed = false;
 
 byte gameState = STATE_MENU_INTRO;   // start the game with the TEAM a.r.g. logo
 byte menuSelection = STATE_MENU_PLAY; // PLAY menu item is pre-selected
 byte globalCounter = 0;
 
-boolean danger = false;
-boolean blinking = true;
-boolean songPlayed = false;
+unsigned long score = 0;
+
+
 
 #endif
