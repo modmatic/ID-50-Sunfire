@@ -34,7 +34,8 @@ const FunctionPointer PROGMEM mainGameLoop[] = {
 
 
 void setup() {
-  arduboy.begin();
+  arduboy.boot();
+  arduboy.audio.begin();
   arduboy.setFrameRate(30);                                 // set the frame rate of the game at 30 fps
   arduboy.initRandomSeed();                                 // This sets the random to more random, remove this if no random is needed !
   ATM.play(titleSong);

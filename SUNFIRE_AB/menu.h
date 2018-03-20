@@ -17,10 +17,10 @@ void drawTitleScreen()
   sprites.drawSelfMasked(0, 11, titleSun, 0);
   sprites.drawSelfMasked(58, 11, titleFire, 0);
   sprites.drawSelfMasked(18, 40, titleSolar, 0);
-  //sprites.drawSelfMasked(16, 40, FlareOne, flareFrame % 4);
-  sprites.drawSelfMasked(15, 40, FlareTwo, flareFrame % 8);
-  sprites.drawSelfMasked(40, 48, FlareTwo, (flareFrame + 4) % 8);
-  sprites.drawSelfMasked(83, 47, FlareTwo, (flareFrame + 2) % 8);
+  sprites.drawSelfMasked(32, 46, FlareOne, (((flareFrame % 16) < 8) ?  (flareFrame % 16) : 0));
+  sprites.drawSelfMasked(15, 40, FlareTwo, (((flareFrame % 12) < 8) ?  (flareFrame % 12) : 0));
+  sprites.drawSelfMasked(40, 48, FlareTwo, (((flareFrame % 13) < 8) ?  (flareFrame % 13) : 0));
+  sprites.drawSelfMasked(83, 47, FlareTwo, ((((flareFrame + 2) % 15) < 8) ?  ((flareFrame + 2) % 15) : 0));
   sprites.drawSelfMasked(25, 43, FlareThree, (flareFrame + 4) % 8);
   sprites.drawPlusMask(42 + x_ship, 33 + y_ship, titleShip_plus_mask, 0);
 }
@@ -61,7 +61,7 @@ void stateMenuInfo()
 void stateMenuSoundfx()
 {
   drawTitleScreen();
-  for (byte i = 0; i < 3; i++) sprites.drawErase(31 + (28 * i), 2, titleMenu, i+4);
+  for (byte i = 0; i < 3; i++) sprites.drawErase(31 + (28 * i), 2, titleMenu, i + 4);
   sprites.drawErase((arduboy.audio.enabled() * 28) + 54, 2, titlePointer, 0);
   if (arduboy.justPressed(RIGHT_BUTTON)) arduboy.audio.on();
   if (arduboy.justPressed(LEFT_BUTTON)) arduboy.audio.off();
