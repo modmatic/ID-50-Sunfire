@@ -12,16 +12,33 @@ void drawTitleScreen()
 {
   x_ship = random(0, 2);
   y_ship = random(0, 2);
-  if (arduboy.everyXFrames(6)) flareFrame++;
+  if (arduboy.everyXFrames(4)) flareFrame++;
   for (byte i = 0; i < 16; i++) sprites.drawSelfMasked(i * 8, 0, titleWhite, 0);
   sprites.drawSelfMasked(0, 11, titleSun, 0);
   sprites.drawSelfMasked(58, 11, titleFire, 0);
   sprites.drawSelfMasked(18, 40, titleSolar, 0);
-  sprites.drawSelfMasked(32, 46, FlareOne, (((flareFrame % 16) < 8) ?  (flareFrame % 16) : 0));
+
+  // left side
+  sprites.drawSelfMasked(15, 40, FlareFour, ((((flareFrame + 16) % 64) < 16) ?  (flareFrame + 16) % 64 : 0));
   sprites.drawSelfMasked(15, 40, FlareTwo, (((flareFrame % 12) < 8) ?  (flareFrame % 12) : 0));
+  sprites.drawSelfMasked(25, 44, FlareThree, (flareFrame + 4) % 8);
+  sprites.drawSelfMasked(32, 46, FlareOne, (((flareFrame % 16) < 8) ?  (flareFrame % 16) : 0));
   sprites.drawSelfMasked(40, 48, FlareTwo, (((flareFrame % 13) < 8) ?  (flareFrame % 13) : 0));
+
+  // middle
+  sprites.drawSelfMasked(98, 40, FlareFour, (((flareFrame + 200) % 64< 16) ?  (flareFrame + 102) %64: 0));
+  sprites.drawSelfMasked(58, 50, FlareThree, ((((flareFrame + 2) % 8) < 10) ?  ((flareFrame + 2) % 10) : 0));
+  sprites.drawSelfMasked(62, 50, FlareOne, ((((flareFrame + 3) % 24) < 8) ?  ((flareFrame + 3) % 24) : 0));
+  sprites.drawSelfMasked(68, 50, FlareThree, ((((flareFrame + 5) % 15) < 8) ?  ((flareFrame + 5) % 15) : 0));
+
+  // right side
+  sprites.drawSelfMasked(59, 48, FlareFour, (((flareFrame + 102) %64< 16) ?  (flareFrame + 200) %64: 0));
   sprites.drawSelfMasked(83, 47, FlareTwo, ((((flareFrame + 2) % 15) < 8) ?  ((flareFrame + 2) % 15) : 0));
-  sprites.drawSelfMasked(25, 43, FlareThree, (flareFrame + 4) % 8);
+  sprites.drawSelfMasked(89, 46, FlareThree, (flareFrame) % 8);
+  sprites.drawSelfMasked(96, 43, FlareOne, ((((flareFrame + 5) % 16) < 8) ?  ((flareFrame + 5) % 16) : 0));
+  sprites.drawSelfMasked(102, 41, FlareTwo, ((((flareFrame) % 11) < 8) ?  ((flareFrame) % 11) : 0));
+  
+
   sprites.drawPlusMask(42 + x_ship, 33 + y_ship, titleShip_plus_mask, 0);
 }
 
