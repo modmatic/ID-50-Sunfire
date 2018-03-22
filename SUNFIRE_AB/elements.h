@@ -14,6 +14,7 @@
 #define TYPE_ENEMY_FRONT 11
 
 #define TYPE_ENEMY_CARRIER 12
+#define TYPE_ASTEROID 13
 
 #define STATE_DEBRIS_TL_MOVE 1
 #define STATE_DEBRIS_TR_MOVE 2
@@ -57,6 +58,8 @@
 
 #define PLASMA_NEAR 82
 #define PLASMA_FAR  83
+
+#define STATE_ASTEROID 84
 
 #define STATE_EXPLODING 99
 
@@ -150,6 +153,57 @@ LevelElement bullet_move(LevelElement element) {
     }
 
     if (element.state > STATE_HIDDEN)  sprites.drawSelfMasked(element.x, element.y, IMG_BULLET, element.step);
+    return element;
+}
+
+LevelElement asteroid_move(LevelElement element) {
+    bool newAsteroid = false;
+    if (element.state > STATE_HIDDEN)
+    {
+      if (element.speed_counter == element.speed)
+      {         
+         if (element.counter > 0) {
+             element.counter--;
+        } else {
+             element.counter = COUNTER_START;
+             element.step++;
+             if (element.step > 3) {
+              element.state = STATE_HIDDEN;
+              newAsteroid = true;
+              danger = false;
+             }
+        }
+    
+        element.speed_counter = 0;
+     }
+   
+      element.speed_counter++;
+    }
+
+   if (element.state > STATE_HIDDEN) {
+  
+    if (element.state == STATE_EXPLODING)
+    {
+        sprites.drawSelfMasked(element.x, element.y, IMG_EXPLOSION, element.step);
+        if (element.step < 2) {
+              element.step++;
+        } else {
+            element.state = STATE_HIDDEN;
+            newAsteroid = true;
+            danger = false;
+        }  
+    } else {
+       sprites.drawSelfMasked(element.x, element.y, IMG_ASTEROID, element.step);
+    }
+   }
+
+   if (newAsteroid) {
+       element.x = (random(80)+48);
+       element.y = (random(20)+16);
+       element.step = 0;
+       element.state = STATE_ASTEROID;       
+       element.counter = COUNTER_START; 
+     }
     return element;
 }
 
@@ -262,7 +316,7 @@ LevelElement debris_move(LevelElement element)
           }
           
       }
-      sprites.drawSelfMasked(element.x, element.y, IMG_DEBRIS, element.step);
+	  if (element.type == TYPE_DEBRIS) sprites.drawSelfMasked(element.x, element.y, IMG_DEBRIS, element.step); 
       element.speed_counter++;
     }
     return element;
@@ -751,8 +805,12 @@ void level_element_handle(char pitch, char roll)
     }
       
     switch (levelElements[i].type) {
-      case TYPE_DEBRIS:
+    case TYPE_DEBRIS:
       levelElements[i] = debris_move(levelElements[i]);
+      break;
+      
+	  case TYPE_ASTEROID:
+      levelElements[i] = asteroid_move(levelElements[i]);
       break;
 
       case TYPE_BULLET:
@@ -786,7 +844,7 @@ void level_element_handle(char pitch, char roll)
 void level_element_draw_display () {
   for (char i=0; i < element_count; i++)
   {
-    if (levelElements[i].type == TYPE_ENEMY_REAR || levelElements[i].type == TYPE_ENEMY_FRONT) {
+    if (levelElements[i].type == TYPE_ENEMY_REAR || levelElements[i].type == TYPE_ENEMY_FRONT || levelElements[i].type == TYPE_ASTEROID) {
       arduboy.drawPixel((levelElements[i].x / 8)+16, (levelElements[i].y / 8)+54,WHITE);
     }
   }
